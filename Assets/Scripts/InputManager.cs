@@ -28,4 +28,6 @@ public class InputManager : MonoBehaviour
         nameInput = userEntry.text;
         Debug.Log(nameInput);
     }
+
+    
 }
