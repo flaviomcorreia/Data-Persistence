@@ -12,6 +12,7 @@ public class MainManager : MonoBehaviour
 
     public Text ScoreText;
     public GameObject GameOverText;
+    private BestScore scoreHolder;
     
     private bool m_Started = false;
     private int m_Points;
@@ -68,8 +69,11 @@ public class MainManager : MonoBehaviour
     }
 
     public void GameOver()
-    {
+    {   
+        scoreHolder = GameObject.Find("Canvas").GetComponent<BestScore>();
         m_GameOver = true;
         GameOverText.SetActive(true);
+        scoreHolder.setScore(m_Points);
+
     }
 }
