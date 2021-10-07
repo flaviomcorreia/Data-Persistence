@@ -17,6 +17,6 @@ public class BestScore : MonoBehaviour
 
     public void setScore(int points){
         Debug.Log(playerName);
-        BestScoreText.text = "Best Score :" + playerName + $": {points}";
+        BestScoreText.text = "Best Score : " + playerName + $" : {points}";
     }
 }
