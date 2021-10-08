@@ -21,7 +21,9 @@ public class MainManager : MonoBehaviour
 
     
     void Start()
-    {
+    {   
+        scoreHolder = GameObject.Find("Canvas").GetComponent<BestScore>();
+        scoreHolder.LoadNameAndScore();
         const float step = 0.6f;
         int perLine = Mathf.FloorToInt(4.0f / step);
         

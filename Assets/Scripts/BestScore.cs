@@ -9,12 +9,14 @@ public class BestScore : MonoBehaviour
 {
     public Text BestScoreText;
 
-    private string playerName;
+    private string playerName, playerOldRecord;
 
     private int topScore = 0;
 
+    string path;
 
     void Awake(){
+        path = Application.persistentDataPath + "/savefile.json";
         playerName = InputManager.Instance.nameInput;
         Restart();
         
@@ -23,18 +25,26 @@ public class BestScore : MonoBehaviour
 
     public void setScore(int points){
         BestScoreText.text = "Best Score : " + playerName + $" : {points}";
-        if(topScore > points){
-            SaveUserInfo(points);
-        }
+        SaveUserInfo(points);
         
     }
 
+    public void LoadNameAndScore(){
+        Debug.Log(path);
+        if(File.Exists(path)){
+            Restart();
+        }
+        else{
+            Debug.Log(Application.persistentDataPath + "/savefile.json");
+            BestScoreText.text = "Best Score : Name: 0";   
+        }
+    }
+
     public void Restart(){
-        string path = Application.persistentDataPath + "/savefile.json";
+        
         if(File.Exists(path)){
             LoadUserInfo(path);
-            Debug.Log("Am I being called?");
-            BestScoreText.text = "Best Score : " + playerName + $" : {topScore}";
+            BestScoreText.text = "Best Score : " + playerOldRecord + $" : {topScore}";
         }
     }
 
@@ -51,15 +61,16 @@ public class BestScore : MonoBehaviour
 
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(Application.persistentDataPath + "/savefile.json", json);
+        Debug.Log("Saving sucessefully");
     }
 
     public void LoadUserInfo(string path){
        
             string json = File.ReadAllText(path);
             SaveData data = JsonUtility.FromJson<SaveData>(json);
-
-            playerName = data.userName;
+            playerOldRecord = data.userName;
             topScore = data.points;
+            Debug.Log("Loading Sucessefully");
         
     }
 
